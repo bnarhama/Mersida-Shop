@@ -63,6 +63,7 @@ export default function Register() {
         <button className="register-button mt-3" type="submit">
           Register
         </button>
+        <a href="/login">login</a>
       </form>
     </div>
   );

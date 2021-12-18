@@ -11,14 +11,18 @@ const Products = () => {
   useEffect(() => {
     const getProducts = async () => {
       setLoading(true);
-
-      const response = await fetch("https://fakestoreapi.com/products");
-      if (ComponentMounted) {
-        setData(await response.clone().json());
-        setFilter(await response.json());
-        setLoading(false);
-        console.log(filter);
+      try {
+        const response = await fetch("http://localhost:5000/products");
+        if (ComponentMounted) {
+          setData(await response.clone().json());
+          setFilter(await response.json());
+          setLoading(false);
+          console.log(filter);
+        }
+      } catch (error) {
+        console.log(error);
       }
+
       return () => {
         ComponentMounted(false);
       };
@@ -64,30 +68,32 @@ const Products = () => {
           </button>
           <button
             className="btn btn-outline-dark me-2"
-            onClick={() => filterProduct("men's clothing")}
+            onClick={() => filterProduct("Chocolate Oatmeal")}
           >
-            Men's Clothing
+            Chocolate Oatmeal
           </button>
           <button
             className="btn btn-outline-dark me-2"
-            onClick={() => filterProduct("women's clothing")}
+            onClick={() => filterProduct("Oatmeal Biscuit")}
           >
-            Women's Clothing
+            Oatmeal Biscuit
           </button>
+
           <button
             className="btn btn-outline-dark me-2"
-            onClick={() => filterProduct("jewelery")}
+            onClick={() => filterProduct("Oat Chocolate Biscuit")}
           >
-            Jewelery
+            Oat Chocolate Biscuit
           </button>
+
           <button
             className="btn btn-outline-dark me-2"
-            onClick={() => filterProduct("electronics")}
+            onClick={() => filterProduct("Chocolate Milk Box")}
           >
-            Electronic
+            Chocolate Milk Box
           </button>
         </div>
-        {filter.map((product) => {
+        {filter?.map((product) => {
           return (
             <>
               <div className=" col-md-3 mb-4">
@@ -100,11 +106,11 @@ const Products = () => {
                   />
                   <div class="card-body">
                     <h5 class="card-title mb-0">
-                      {product.title.substring(0, 12)}
+                      {product.name.substring(0, 12)}
                     </h5>
                     <p class="card-text lead fw-bold">${product.price}</p>
                     <NavLink
-                      to={`/products/${product.id}`}
+                      to={`/products/${product._id}`}
                       class="btn btn-outline-dark"
                     >
                       Buy Now
